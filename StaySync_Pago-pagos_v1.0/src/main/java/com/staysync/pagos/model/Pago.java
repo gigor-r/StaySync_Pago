@@ -73,7 +73,7 @@ public class Pago {
     protected void onUpdate() { updatedAt = LocalDateTime.now(); }
 
     public enum MetodoPago {
-        TARJETA_CREDITO, TARJETA_DEBITO, TRANSFERENCIA, EFECTIVO, PAYPAL
+        TARJETA_CREDITO, TARJETA_DEBITO, TRANSFERENCIA, EFECTIVO, PAYPAL, MERCADO_PAGO, STRIPE
     }
 
     public enum EstadoPago {

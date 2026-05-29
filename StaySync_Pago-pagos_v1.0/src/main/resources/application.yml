@@ -24,6 +24,14 @@ spring:
     password: ${RABBITMQ_PASSWORD:StaySync@Rabbit#2024$Pass}
     virtual-host: ${RABBITMQ_VHOST:staysync_vhost}
 
+stripe:
+  # Configurar en entorno: export STRIPE_SECRET_KEY=sk_test_...
+  # Obtener en: dashboard.stripe.com → Developers → API keys → Secret key
+  secret-key: ${STRIPE_SECRET_KEY}
+  back-urls:
+    success: ${STRIPE_SUCCESS_URL:http://localhost:3000/huesped/pago-exitoso}
+    cancel: ${STRIPE_CANCEL_URL:http://localhost:3000/huesped/pago-fallido}
+
 services:
   reservas:
     url: ${RESERVAS_SERVICE_URL:http://localhost:8083}

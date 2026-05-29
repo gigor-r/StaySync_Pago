@@ -43,4 +43,10 @@ public class PagoController {
     public ResponseEntity<List<PagoResponse>> obtenerPorReserva(@PathVariable Long reservaId) {
         return ResponseEntity.ok(pagoService.obtenerPorReserva(reservaId));
     }
+
+    @PostMapping("/{pagoId}/reembolso")
+    @Operation(summary = "Solicitar reembolso de un pago completado")
+    public ResponseEntity<PagoResponse> solicitarReembolso(@PathVariable Long pagoId) {
+        return ResponseEntity.ok(pagoService.solicitarReembolso(pagoId));
+    }
 }

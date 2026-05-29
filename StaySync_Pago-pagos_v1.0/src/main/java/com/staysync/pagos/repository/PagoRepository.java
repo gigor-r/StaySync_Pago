@@ -10,4 +10,6 @@ public interface PagoRepository extends JpaRepository<Pago, Long> {
     List<Pago> findByReservaId(Long reservaId);
     Optional<Pago> findByReferencia(String referencia);
     boolean existsByReferencia(String referencia);
+    Optional<Pago> findByGatewayId(String gatewayId);
+    boolean existsByGatewayId(String gatewayId);
 }

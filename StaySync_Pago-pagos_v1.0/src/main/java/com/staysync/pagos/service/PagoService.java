@@ -92,6 +92,26 @@ public class PagoService {
                 .map(this::toResponse).collect(Collectors.toList());
     }
 
+    @Transactional
+    public PagoResponse solicitarReembolso(Long pagoId) {
+        Pago pago = pagoRepository.findById(pagoId)
+                .orElseThrow(() -> new PagoNotFoundException(pagoId));
+        if (pago.getEstado() != Pago.EstadoPago.COMPLETADO) {
+            throw new PagoFallidoException(
+                    "Solo se pueden reembolsar pagos COMPLETADOS. Estado actual: " + pago.getEstado());
+        }
+        pago.setEstado(Pago.EstadoPago.REEMBOLSADO);
+        pagoRepository.save(pago);
+        publicarEvento("pago.reembolsado", Map.of(
+                "pagoId",    pago.getId(),
+                "reservaId", pago.getReservaId(),
+                "usuarioId", pago.getUsuarioId(),
+                "monto",     pago.getMonto()
+        ));
+        log.info("Reembolso procesado: {}", pago.getReferencia());
+        return toResponse(pago);
+    }
+
     private boolean procesarConGateway(String token, java.math.BigDecimal monto) {
         // Simulación local: siempre aprueba el pago
         return true;
